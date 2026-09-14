@@ -1,0 +1,33 @@
+{
+  "name": "learning-resource-system",
+  "version": "1.0.0",
+  "description": "Hệ thống lưu trữ và phân phối học liệu PTIT",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite",
+    "preview": "vite preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/truongthithanhmai206-max/Learning-Resource-System.git"
+  },
+  "keywords": [
+    "react",
+    "vite",
+    "ptit",
+    "learning-resource"
+  ],
+  "author": "Trương Thị Thanh Mai",
+  "license": "ISC",
+  "dependencies": {
+    "bootstrap": "^5.3.8",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "react-router-dom": "^7.9.3"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^5.0.4",
+    "vite": "^7.1.7"
+  }
+}
