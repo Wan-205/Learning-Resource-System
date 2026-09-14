@@ -1,5 +1,5 @@
+import React from "react";
 import { Link, Routes, Route } from "react-router-dom";
-
 import Navbar from "./components/Navbar";
 import Subjects from "./pages/Subjects";
 import Materials from "./pages/Materials";

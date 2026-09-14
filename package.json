@@ -4,8 +4,9 @@
   "description": "Hệ thống lưu trữ và phân phối học liệu PTIT",
   "type": "module",
   "scripts": {
+    "start": "vite",
     "dev": "vite",
-    "build": "vite",
+    "build": "vite build",
     "preview": "vite preview"
   },
   "repository": {
