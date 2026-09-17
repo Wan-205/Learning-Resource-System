@@ -1,144 +1,119 @@
-import { Link, NavLink } from "react-router-dom";
+
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 export default function Navbar() {
+  const navigate = useNavigate();
+  const { currentUser, logout, isAdmin } = useAuth();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
+
   const navItems = [
-    {
-      path: "/",
-      label: "Trang chủ",
-      end: true,
-    },
-    {
-      path: "/subjects",
-      label: "Môn học",
-    },
-    {
-      path: "/materials",
-      label: "Học liệu",
-    },
-    {
-      path: "/about",
-      label: "Giới thiệu",
-    },
+    { label: "Trang chủ", path: "/" },
+    { label: "Môn học", path: "/subjects" },
+    { label: "Học liệu", path: "/materials" },
+    { label: "Giới thiệu", path: "/about" },
   ];
 
   return (
-    <header className="bg-white border-bottom">
-      {/* Dòng trên */}
-      <div
-        style={{
-          backgroundColor: "#8f0000",
-          height: "4px",
-        }}
-      />
-
+    <nav className="navbar navbar-expand-lg bg-white shadow-sm">
       <div className="container">
-        <div
-          className="d-flex align-items-center justify-content-between"
-          style={{
-            minHeight: "88px",
-          }}
+        <Link to="/" className="navbar-brand d-flex align-items-center">
+          <img
+            src="/Logo_PTIT_University.png"
+            alt="Logo PTIT"
+            style={{ width: "55px" }}
+            className="me-2"
+          />
+
+          <span className="fw-bold" style={{ color: "#8f0000" }}>
+            HỌC LIỆU PTIT
+          </span>
+        </Link>
+
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarContent"
+          aria-controls="navbarContent"
+          aria-expanded="false"
+          aria-label="Mở menu"
         >
+          <span className="navbar-toggler-icon"></span>
+        </button>
 
-          {/* LOGO + TÊN */}
-          <Link
-            to="/"
-            className="d-flex align-items-center text-decoration-none"
-          >
-            <img
-              src="/Logo_PTIT_University.png"
-              alt="Logo PTIT"
-              style={{
-                width: "58px",
-                height: "58px",
-                objectFit: "contain",
-              }}
-            />
-
-            <div className="ms-3">
-              <div
-                className="fw-bold"
-                style={{
-                  color: "#8f0000",
-                  fontSize: "19px",
-                  lineHeight: "1.2",
-                }}
-              >
-                HỌC LIỆU PTIT
-              </div>
-
-              <div
-                className="text-secondary"
-                style={{
-                  fontSize: "12px",
-                }}
-              >
-                Học viện Công nghệ Bưu chính Viễn thông
-              </div>
-            </div>
-          </Link>
-
-
-          {/* MENU */}
-          <nav className="d-none d-lg-flex align-items-center gap-1">
-
+        <div className="collapse navbar-collapse" id="navbarContent">
+          <ul className="navbar-nav mx-auto">
             {navItems.map((item) => (
-              <NavLink
-                key={item.path}
-                to={item.path}
-                end={item.end}
-                className={({ isActive }) =>
-                  `text-decoration-none fw-semibold px-3 py-2 rounded ${
-                    isActive
-                      ? "text-white"
-                      : "text-dark"
-                  }`
-                }
-                style={({ isActive }) => ({
-                  backgroundColor: isActive
-                    ? "#a50000"
-                    : "transparent",
-                  transition: "0.2s",
-                })}
-              >
-                {item.label}
-              </NavLink>
+              <li className="nav-item" key={item.path}>
+                <NavLink
+                  to={item.path}
+                  className={({ isActive }) =>
+                    `nav-link ${isActive ? "fw-bold" : ""}`
+                  }
+                  style={({ isActive }) => ({
+                    color: isActive ? "#8f0000" : "#333",
+                  })}
+                >
+                  {item.label}
+                </NavLink>
+              </li>
             ))}
+          </ul>
 
-          </nav>
+          <div className="d-flex align-items-center gap-2 flex-wrap">
+            {currentUser ? (
+              <>
+                <span className="text-secondary small">
+                  Xin chào, {currentUser.name || currentUser.account}
+                </span>
 
+                {isAdmin && (
+                  <>
+                    <Link
+                      to="/admin"
+                      className="btn btn-outline-danger btn-sm"
+                    >
+                      Quản trị
+                    </Link>
 
-          {/* TÀI KHOẢN */}
-          <div className="d-flex align-items-center gap-2">
+                    <span className="badge bg-danger">
+                      ADMIN
+                    </span>
+                  </>
+                )}
 
-            <Link
-              to="/login"
-              className="btn btn-outline-danger"
-            >
-              Đăng nhập
-            </Link>
+                <button
+                  className="btn btn-outline-danger btn-sm"
+                  onClick={handleLogout}
+                >
+                  Đăng xuất
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  to="/login"
+                  className="btn btn-outline-danger btn-sm"
+                >
+                  Đăng nhập
+                </Link>
 
-            <Link
-              to="/register"
-              className="btn text-white"
-              style={{
-                backgroundColor: "#a50000",
-              }}
-            >
-              Đăng ký
-            </Link>
-
+                <Link
+                  to="/register"
+                  className="btn btn-danger btn-sm"
+                >
+                  Đăng ký
+                </Link>
+              </>
+            )}
           </div>
-
         </div>
       </div>
-
-      {/* Đường đỏ dưới navbar */}
-      <div
-        style={{
-          height: "1px",
-          backgroundColor: "#eeeeee",
-        }}
-      />
-    </header>
+    </nav>
   );
 }
