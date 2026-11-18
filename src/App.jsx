@@ -1,10 +1,13 @@
 import React from "react";
-import { Link, Routes, Route } from "react-router-dom";
+import { Link, Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Subjects from "./pages/Subjects";
 import Materials from "./pages/Materials";
 import MaterialDetail from "./pages/MaterialDetail";
 import About from "./pages/About";
+import Admin from "./pages/Admin";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 function Home() {
   return (
@@ -272,108 +275,15 @@ function Home() {
                 ĐỀ XUẤT
               </div>
 
-              <h2 className="fw-bold mt-2 mb-0">
-                Học liệu nổi bật
-              </h2>
+              <h2 className="fw-bold mt-2 mb-0">Học liệu nổi bật</h2>
             </div>
-
-            <Link
-              to="/materials"
-              className="text-danger text-decoration-none fw-semibold"
-            >
-              Xem tất cả →
-            </Link>
           </div>
 
-          <div className="row g-4">
-            <div className="col-md-4">
-              <div className="card border-0 shadow-sm h-100">
-                <div className="card-body p-4">
-                  <span className="badge bg-danger mb-3">
-                    PDF
-                  </span>
-
-                  <h5 className="fw-bold">
-                    Giáo trình Lập trình hướng đối tượng
-                  </h5>
-
-                  <p className="text-secondary small">
-                    INT1001 · Lập trình hướng đối tượng
-                  </p>
-
-                  <div className="d-flex justify-content-between small text-secondary mb-3">
-                    <span>128 lượt tải</span>
-                    <span>10/09/2026</span>
-                  </div>
-
-                  <Link
-                    to="/materials/1"
-                    className="btn btn-outline-danger btn-sm"
-                  >
-                    Xem chi tiết
-                  </Link>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-md-4">
-              <div className="card border-0 shadow-sm h-100">
-                <div className="card-body p-4">
-                  <span className="badge bg-danger mb-3">
-                    PPTX
-                  </span>
-
-                  <h5 className="fw-bold">
-                    Bài giảng Cơ sở dữ liệu
-                  </h5>
-
-                  <p className="text-secondary small">
-                    INT1002 · Cơ sở dữ liệu
-                  </p>
-
-                  <div className="d-flex justify-content-between small text-secondary mb-3">
-                    <span>142 lượt tải</span>
-                    <span>07/09/2026</span>
-                  </div>
-
-                  <Link
-                    to="/materials/4"
-                    className="btn btn-outline-danger btn-sm"
-                  >
-                    Xem chi tiết
-                  </Link>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-md-4">
-              <div className="card border-0 shadow-sm h-100">
-                <div className="card-body p-4">
-                  <span className="badge bg-danger mb-3">
-                    PDF
-                  </span>
-
-                  <h5 className="fw-bold">
-                    Giáo trình An toàn thông tin
-                  </h5>
-
-                  <p className="text-secondary small">
-                    ATTT1001 · An toàn thông tin
-                  </p>
-
-                  <div className="d-flex justify-content-between small text-secondary mb-3">
-                    <span>137 lượt tải</span>
-                    <span>22/08/2026</span>
-                  </div>
-
-                  <Link
-                    to="/materials/20"
-                    className="btn btn-outline-danger btn-sm"
-                  >
-                    Xem chi tiết
-                  </Link>
-                </div>
-              </div>
+          <div className="card border-0 shadow-sm">
+            <div className="card-body text-center py-5">
+              <h3 className="h5 fw-bold">Chưa có dữ liệu học liệu</h3>
+              <p className="text-secondary mb-3">Học liệu nổi bật sẽ hiển thị sau khi kết nối nguồn dữ liệu.</p>
+              <Link to="/materials" className="btn btn-outline-danger btn-sm">Mở kho học liệu</Link>
             </div>
           </div>
         </div>
@@ -496,12 +406,17 @@ function NotFound() {
 }
 
 export default function App() {
+  const location = useLocation();
+  const isAdminPage = location.pathname.startsWith("/admin");
+
   return (
     <>
-      <Navbar />
+      {!isAdminPage && <Navbar />}
 
       <main>
         <Routes>
+          <Route path="/admin" element={<Admin />} />
+
           <Route path="/" element={<Home />} />
 
           <Route
@@ -522,6 +437,16 @@ export default function App() {
           <Route
             path="/about"
             element={<About />}
+          />
+
+          <Route
+            path="/login"
+            element={<Login />}
+          />
+
+          <Route
+            path="/register"
+            element={<Register />}
           />
 
           <Route
